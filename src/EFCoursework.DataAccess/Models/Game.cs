@@ -16,15 +16,15 @@ namespace EFCoursework.DataAccess.Models
         public int ReviewCount { get; set; }
         public int ReviewScore { get; set; }
         public int ReviewPercentage { get; set; }
-        public virtual ICollection<OS> SupportedSystems { get; set; }
-        public virtual ICollection<Developer> Developers { get; set; }
-        public virtual ICollection<Publisher> Publishers { get; set; }
-        public virtual ICollection<Language> SupportedLanguages { get; set; }
+        public virtual ICollection<GameSystem> SupportedSystems { get; set; }
+        public virtual ICollection<GameDeveloper> Developers { get; set; }
+        public virtual ICollection<GamePublisher> Publishers { get; set; }
+        public virtual ICollection<GameLanguage> SupportedLanguages { get; set; }
         public string ClientIconUrl { get; set; }
         public string LogoUrl { get; set; }
         public string SteamUrl { get; set; }
-        public virtual ICollection<Genre> Genres { get; set; }
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<GameGenre> Genres { get; set; }
+        public virtual ICollection<GameTag> Tags { get; set; }
         public virtual ICollection<Image> Screenshots { get; set; }
         public virtual ICollection<Video> Videos { get; set; }
     }

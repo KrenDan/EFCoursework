@@ -1,21 +1,18 @@
-﻿using EFCoursework.BusinessLogic.Services;
-using EFCoursework.DataAccess.Infrastructure;
-using EFCoursework.DataAccess.UnitOfWork;
+﻿using EFCoursework.BusinessLogic.Infrastructure;
+using EFCoursework.BusinessLogic.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EFCoursework.BusinessLogic.Infrastructure
+namespace EFCoursework.WPF.Infrastructure
 {
-    public static class BusinessConfiguration
+    public static class PresentationConfiguration
     {
         public static IServiceCollection ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            DataAccessConfiguration.ConfigureServices(services, configuration);
-
-            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            BusinessConfiguration.ConfigureServices(services, configuration);
 
             services.AddTransient<IGameService, GameService>();
 

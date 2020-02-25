@@ -9,5 +9,6 @@ namespace EFCoursework.DataAccess.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string IconUrl { get; set; }
+        public virtual ICollection<GameSystem> GameSystems { get; set; }
     }
 }
