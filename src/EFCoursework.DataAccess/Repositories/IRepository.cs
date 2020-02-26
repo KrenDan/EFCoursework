@@ -8,11 +8,8 @@ namespace EFCoursework.DataAccess.Repositories
 {
     public interface IRepository<T> : IDisposable where T : class
     {
-        IQueryable<T> GetAll();
-        IQueryable<T> Get(Expression<Func<T, bool>> predicate);
-        void Insert(T entity);
-        void Update(T entity);
-        void Delete(T entity);
-        IQueryable<T> GetWithInclude(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
+        Task<IReadOnlyCollection<T>> GetAllAsync();
+        Task<IReadOnlyCollection<T>> GetAsync(Expression<Func<T, bool>> predicate);
+        Task InsertAsync(T entity);
     }
 }

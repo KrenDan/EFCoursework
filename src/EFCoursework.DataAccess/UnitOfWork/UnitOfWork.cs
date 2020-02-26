@@ -11,28 +11,28 @@ namespace EFCoursework.DataAccess.UnitOfWork
     {
         private readonly ApplicationContext _context;
 
-        private GenericRepository<Developer> _developers;
-        private GenericRepository<Game> _games;
-        private GenericRepository<GameDeveloper> _gameDevelopers;
-        private GenericRepository<GameGenre> _gameGenres;
-        private GenericRepository<GameLanguage> _gameLanguages;
-        private GenericRepository<GamePublisher> _gamePublishers;
-        private GenericRepository<GameSystem> _gameSystems;
-        private GenericRepository<GameTag> _gameTags;
-        private GenericRepository<Genre> _genres;
-        private GenericRepository<Image> _images;
-        private GenericRepository<Language> _languages;
-        private GenericRepository<OS> _systems;
-        private GenericRepository<Publisher> _publishers;
-        private GenericRepository<Tag> _tags;
-        private GenericRepository<Video> _videos;
+        private BaseRepository<Developer> _developers;
+        private BaseRepository<Game> _games;
+        private BaseRepository<GameDeveloper> _gameDevelopers;
+        private BaseRepository<GameGenre> _gameGenres;
+        private BaseRepository<GameLanguage> _gameLanguages;
+        private BaseRepository<GamePublisher> _gamePublishers;
+        private BaseRepository<GameSystem> _gameSystems;
+        private BaseRepository<GameTag> _gameTags;
+        private BaseRepository<Genre> _genres;
+        private BaseRepository<Image> _images;
+        private BaseRepository<Language> _languages;
+        private BaseRepository<OS> _systems;
+        private BaseRepository<Publisher> _publishers;
+        private BaseRepository<Tag> _tags;
+        private BaseRepository<Video> _videos;
 
         public IRepository<Developer> Developers
         {
             get
             {
                 if (_developers == null)
-                    _developers = new GenericRepository<Developer>(_context);
+                    _developers = new BaseRepository<Developer>(_context);
                 return _developers;
             }
         }
@@ -42,7 +42,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_games == null)
-                    _games = new GenericRepository<Game>(_context);
+                    _games = new BaseRepository<Game>(_context);
                 return _games;
             }
         }
@@ -52,7 +52,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_gameDevelopers == null)
-                    _gameDevelopers = new GenericRepository<GameDeveloper>(_context);
+                    _gameDevelopers = new BaseRepository<GameDeveloper>(_context);
                 return _gameDevelopers;
             }
         }
@@ -62,7 +62,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_gameGenres == null)
-                    _gameGenres = new GenericRepository<GameGenre>(_context);
+                    _gameGenres = new BaseRepository<GameGenre>(_context);
                 return _gameGenres;
             }
         }
@@ -72,7 +72,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_gameLanguages == null)
-                    _gameLanguages = new GenericRepository<GameLanguage>(_context);
+                    _gameLanguages = new BaseRepository<GameLanguage>(_context);
                 return _gameLanguages;
             }
         }
@@ -82,7 +82,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_gamePublishers == null)
-                    _gamePublishers = new GenericRepository<GamePublisher>(_context);
+                    _gamePublishers = new BaseRepository<GamePublisher>(_context);
                 return _gamePublishers;
             }
         }
@@ -92,7 +92,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_gameSystems == null)
-                    _gameSystems = new GenericRepository<GameSystem>(_context);
+                    _gameSystems = new BaseRepository<GameSystem>(_context);
                 return _gameSystems;
             }
         }
@@ -102,7 +102,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_gameTags == null)
-                    _gameTags = new GenericRepository<GameTag>(_context);
+                    _gameTags = new BaseRepository<GameTag>(_context);
                 return _gameTags;
             }
         }
@@ -112,7 +112,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_genres == null)
-                    _genres = new GenericRepository<Genre>(_context);
+                    _genres = new BaseRepository<Genre>(_context);
                 return _genres;
             }
         }
@@ -122,7 +122,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_images == null)
-                    _images = new GenericRepository<Image>(_context);
+                    _images = new BaseRepository<Image>(_context);
                 return _images;
             }
         }
@@ -132,7 +132,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_languages == null)
-                    _languages = new GenericRepository<Language>(_context);
+                    _languages = new BaseRepository<Language>(_context);
                 return _languages;
             }
         }
@@ -142,7 +142,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_systems == null)
-                    _systems = new GenericRepository<OS>(_context);
+                    _systems = new BaseRepository<OS>(_context);
                 return _systems;
             }
         }
@@ -152,7 +152,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_publishers == null)
-                    _publishers = new GenericRepository<Publisher>(_context);
+                    _publishers = new BaseRepository<Publisher>(_context);
                 return _publishers;
             }
         }
@@ -162,7 +162,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_tags == null)
-                    _tags = new GenericRepository<Tag>(_context);
+                    _tags = new BaseRepository<Tag>(_context);
                 return _tags;
             }
         }
@@ -172,7 +172,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             get
             {
                 if (_videos == null)
-                    _videos = new GenericRepository<Video>(_context);
+                    _videos = new BaseRepository<Video>(_context);
                 return _videos;
             }
         }

@@ -1,4 +1,6 @@
-﻿using EFCoursework.WPF.Infrastructure;
+﻿using AutoMapper;
+using EFCoursework.BusinessLogic.Infrastructure.Mapper;
+using EFCoursework.WPF.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -29,8 +31,11 @@ namespace EFCoursework
 
             _serviceProvider =
                 PresentationConfiguration.ConfigureServices(new ServiceCollection(), _configuration)
-                .AddSingleton<ViewModelLocator>()
+                //.AddSingleton<ViewModelLocator>()
                 .BuildServiceProvider();
+
+            //var config = new MapperConfiguration(cfg => cfg.AddMaps(new[] { "EFCoursework.BusinessLogic" }));
+            //config.CompileMappings();
 
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();

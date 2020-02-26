@@ -14,21 +14,21 @@ namespace EFCoursework.DataAccess.Infrastructure
     {
         public static IServiceCollection ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IRepository<Developer>, GenericRepository<Developer>>();
-            services.AddTransient<IRepository<Game>, GenericRepository<Game>>();
-            services.AddTransient<IRepository<GameDeveloper>, GenericRepository<GameDeveloper>>();
-            services.AddTransient<IRepository<GameGenre>, GenericRepository<GameGenre>>();
-            services.AddTransient<IRepository<GameLanguage>, GenericRepository<GameLanguage>>();
-            services.AddTransient<IRepository<GamePublisher>, GenericRepository<GamePublisher>>();
-            services.AddTransient<IRepository<GameSystem>, GenericRepository<GameSystem>>();
-            services.AddTransient<IRepository<GameTag>, GenericRepository<GameTag>>();
-            services.AddTransient<IRepository<Genre>, GenericRepository<Genre>>();
-            services.AddTransient<IRepository<Image>, GenericRepository<Image>>();
-            services.AddTransient<IRepository<Language>, GenericRepository<Language>>();
-            services.AddTransient<IRepository<OS>, GenericRepository<OS>>();
-            services.AddTransient<IRepository<Publisher>, GenericRepository<Publisher>>();
-            services.AddTransient<IRepository<Tag>, GenericRepository<Tag>>();
-            services.AddTransient<IRepository<Video>, GenericRepository<Video>>();
+            services.AddTransient<IRepository<Developer>, BaseRepository<Developer>>();
+            services.AddTransient<IRepository<Game>, BaseRepository<Game>>();
+            services.AddTransient<IRepository<GameDeveloper>, BaseRepository<GameDeveloper>>();
+            services.AddTransient<IRepository<GameGenre>, BaseRepository<GameGenre>>();
+            services.AddTransient<IRepository<GameLanguage>, BaseRepository<GameLanguage>>();
+            services.AddTransient<IRepository<GamePublisher>, BaseRepository<GamePublisher>>();
+            services.AddTransient<IRepository<GameSystem>, BaseRepository<GameSystem>>();
+            services.AddTransient<IRepository<GameTag>, BaseRepository<GameTag>>();
+            services.AddTransient<IRepository<Genre>, BaseRepository<Genre>>();
+            services.AddTransient<IRepository<Image>, BaseRepository<Image>>();
+            services.AddTransient<IRepository<Language>, BaseRepository<Language>>();
+            services.AddTransient<IRepository<OS>, BaseRepository<OS>>();
+            services.AddTransient<IRepository<Publisher>, BaseRepository<Publisher>>();
+            services.AddTransient<IRepository<Tag>, BaseRepository<Tag>>();
+            services.AddTransient<IRepository<Video>, BaseRepository<Video>>();
 
             services.AddDbContext<ApplicationContext>(builder => 
                 builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));

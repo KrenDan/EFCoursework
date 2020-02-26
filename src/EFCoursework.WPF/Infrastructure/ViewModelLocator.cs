@@ -1,4 +1,6 @@
-﻿using EFCoursework.WPF.ViewModels;
+﻿using CommonServiceLocator;
+using EFCoursework.BusinessLogic.Services;
+using EFCoursework.WPF.ViewModels;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -9,18 +11,13 @@ namespace EFCoursework.WPF.Infrastructure
 {
     public class ViewModelLocator
     {
-        private IServiceProvider _serviceProvider;
-
         public ViewModelLocator()
         {
-
+            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            SimpleIoc.Default.Register<IGameService, GameService>();
+            SimpleIoc.Default.Register<GameViewModel>();
         }
 
-        public ViewModelLocator(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
-        }
-
-        public GameViewModel Game => _serviceProvider.GetRequiredService<GameViewModel>();
+        public GameViewModel Game => ServiceLocator.Current.GetInstance<GameViewModel>();
     }
 }

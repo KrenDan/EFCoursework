@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EFCoursework"
+        xmlns:inf="clr-namespace:EFCoursework.WPF.Infrastructure"
         mc:Ignorable="d"
         DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=Game}"
         Title="MainWindow" Height="450" Width="800"
@@ -15,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <ScrollViewer Margin="5">
             <DataGrid Name="gamesDataGrid" IsReadOnly="True">
-                
+
             </DataGrid>
         </ScrollViewer>
     </Grid>
