@@ -17,17 +17,23 @@ namespace EFCoursework
     /// </summary>
     public partial class App : Application
     {
+        private IConfiguration _configuration;
+        private IServiceProvider _serviceProvider;
+
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json");
-            IConfiguration configuration = builder.Build();
+            _configuration = builder.Build();
 
-            var serviceProvider = 
-                PresentationConfiguration.ConfigureServices(new ServiceCollection(), configuration).BuildServiceProvider();
+            _serviceProvider =
+                PresentationConfiguration.ConfigureServices(new ServiceCollection(), _configuration)
+                .AddSingleton<ViewModelLocator>()
+                .BuildServiceProvider();
+
+            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+            mainWindow.Show();
         }
     }
 }

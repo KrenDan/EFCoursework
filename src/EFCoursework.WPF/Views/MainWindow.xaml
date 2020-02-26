@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EFCoursework"
         mc:Ignorable="d"
+        DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=Game}"
         Title="MainWindow" Height="450" Width="800"
         Background="DimGray">
     <Grid>
@@ -13,7 +14,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ScrollViewer Margin="5">
-            <DataGrid Name="gamesDataGrid">
+            <DataGrid Name="gamesDataGrid" IsReadOnly="True">
                 
             </DataGrid>
         </ScrollViewer>

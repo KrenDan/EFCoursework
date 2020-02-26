@@ -1,8 +1,9 @@
 ﻿<Application x:Class="EFCoursework.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:EFCoursework">
+             xmlns:local="clr-namespace:EFCoursework"
+             xmlns:inf="clr-namespace:EFCoursework.WPF.Infrastructure">
     <Application.Resources>
-         
+        <inf:ViewModelLocator x:Key="ViewModelLocator" />
     </Application.Resources>
 </Application>
