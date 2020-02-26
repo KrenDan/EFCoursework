@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using EFCoursework.BusinessLogic.Infrastructure.Mapper;
 using EFCoursework.WPF.Infrastructure;
+using EFCoursework.WPF.ViewModels;
+using EFCoursework.WPF.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -12,7 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace EFCoursework
+namespace EFCoursework.WPF
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -29,9 +31,7 @@ namespace EFCoursework
                 .AddJsonFile("appsettings.json");
             _configuration = builder.Build();
 
-            _serviceProvider =
-                PresentationConfiguration.ConfigureServices(new ServiceCollection(), _configuration)
-                //.AddSingleton<ViewModelLocator>()
+            _serviceProvider = PresentationConfiguration.ConfigureServices(new ServiceCollection(), _configuration)
                 .BuildServiceProvider();
 
             //var config = new MapperConfiguration(cfg => cfg.AddMaps(new[] { "EFCoursework.BusinessLogic" }));

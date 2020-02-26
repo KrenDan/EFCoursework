@@ -11,9 +11,9 @@ using System.Text;
 
 namespace EFCoursework.WPF.ViewModels
 {
-    public class GameViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
-        public GameViewModel(IGameService gameService)
+        public MainViewModel(IGameService gameService)
         {
             _gameService = gameService;
         }
