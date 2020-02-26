@@ -22,7 +22,9 @@ namespace EFCoursework.BusinessLogic.Services
 
         public async Task<IEnumerable<GameDTO>> GetAllGamesAsync()
         {
-            return await _unitOfWork.Games.GetAll()
+            return await _unitOfWork.Games.GetWithInclude(null,
+                    g => g.SupportedSystems, g => g.Developers, g => g.Publishers,
+                    g => g.Genres, g => g.Tags, g => g.Screenshots, g => g.Videos, g => g.SupportedLanguages)
                 .Select(g => new GameDTO
                 {
                     Id = g.Id,
