@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EFCoursework.DataAccess.Models
+namespace EFCoursework.BusinessLogic.DTO
 {
-    public class Developer
+    public class PublisherDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string LogoUrl { get; set; }
-        public ICollection<GameDeveloper> GameDevelopers { get; set; }
     }
 }

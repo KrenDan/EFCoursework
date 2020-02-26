@@ -8,9 +8,6 @@ namespace EFCoursework.DataAccess.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public bool InterfaceSupported { get; set; }
-        public bool FullAudioSupported { get; set; }
-        public bool SubtitlesSupported { get; set; }
-        public virtual ICollection<GameLanguage> GameLanguages { get; set; }
+        public ICollection<GameLanguage> GameLanguages { get; set; }
     }
 }

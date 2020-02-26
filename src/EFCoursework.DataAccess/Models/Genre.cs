@@ -8,6 +8,6 @@ namespace EFCoursework.DataAccess.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<GameGenre> GameGenres { get; set; }
+        public ICollection<GameGenre> GameGenres { get; set; }
     }
 }

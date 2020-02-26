@@ -81,11 +81,11 @@ namespace EFCoursework.DataAccess.Context
 
             modelBuilder.Entity<Game>()
                 .HasMany(g => g.Screenshots)
-                .WithOne();
+                .WithOne(s => s.Game);
 
             modelBuilder.Entity<Game>()
                 .HasMany(g => g.Videos)
-                .WithOne();
+                .WithOne(v => v.Game);
         }
     }
 }

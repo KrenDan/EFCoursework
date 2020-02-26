@@ -16,16 +16,18 @@ namespace EFCoursework.BusinessLogic.DTO
         public int ReviewCount { get; set; }
         public int ReviewScore { get; set; }
         public int ReviewPercentage { get; set; }
-        public virtual ICollection<GameSystemDTO> SupportedSystems { get; set; }
-        public virtual ICollection<GameDeveloperDTO> Developers { get; set; }
-        public virtual ICollection<GamePublisherDTO> Publishers { get; set; }
-        public virtual ICollection<GameLanguageDTO> SupportedLanguages { get; set; }
+        public ICollection<OSDTO> SupportedSystems { get; set; }
+        public ICollection<DeveloperDTO> Developers { get; set; }
+        public ICollection<PublisherDTO> Publishers { get; set; }
+        public ICollection<LanguageDTO> InterfaceSupportedLanguages { get; set; }
+        public ICollection<LanguageDTO> FullAudioSupportedLanguages { get; set; }
+        public ICollection<LanguageDTO> SubtitlesSupportedLanguages { get; set; }
         public string ClientIconUrl { get; set; }
         public string LogoUrl { get; set; }
         public string SteamUrl { get; set; }
-        public virtual ICollection<GameGenreDTO> Genres { get; set; }
-        public virtual ICollection<GameTagDTO> Tags { get; set; }
-        public virtual ICollection<ImageDTO> Screenshots { get; set; }
-        public virtual ICollection<VideoDTO> Videos { get; set; }
+        public ICollection<GenreDTO> Genres { get; set; }
+        public ICollection<TagDTO> Tags { get; set; }
+        public ICollection<ImageDTO> Screenshots { get; set; }
+        public ICollection<VideoDTO> Videos { get; set; }
     }
 }

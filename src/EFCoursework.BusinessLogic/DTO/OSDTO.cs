@@ -4,10 +4,10 @@ using System.Text;
 
 namespace EFCoursework.BusinessLogic.DTO
 {
-    public class ImageDTO
+    public class OSDTO
     {
         public int Id { get; set; }
-        public string Url { get; set; }
-        public int GameId { get; set; }
+        public string Name { get; set; }
+        public string IconUrl { get; set; }
     }
 }

@@ -7,8 +7,8 @@ namespace EFCoursework.DataAccess.Models
     public class GameDeveloper
     {
         public int GameId { get; set; }
-        public virtual Game Game { get; set; }
+        public Game Game { get; set; }
         public int DeveloperId { get; set; }
-        public virtual Developer Developer { get; set; }
+        public Developer Developer { get; set; }
     }
 }

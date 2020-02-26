@@ -4,7 +4,9 @@ using System.Text;
 
 namespace EFCoursework.BusinessLogic.DTO
 {
-    public class GameDeveloperDTO
+    public class GenreDTO
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
