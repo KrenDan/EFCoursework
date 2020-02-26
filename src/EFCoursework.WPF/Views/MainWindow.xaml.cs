@@ -26,30 +26,9 @@ namespace EFCoursework
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IGameService _gameService;
-
-        public IServiceProvider ServiceProvider { get; }
-        public List<GameDTO> Games { get; set; }
-
         public MainWindow()
         {
             InitializeComponent();
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json");
-            IConfiguration configuration = builder.Build();
-
-            ServiceProvider = 
-                PresentationConfiguration.ConfigureServices(new ServiceCollection(), configuration)
-                .BuildServiceProvider();
-
-            _gameService = ServiceProvider.GetRequiredService<IGameService>();
-        }
-
-        private async void Window_LoadedAsync(object sender, RoutedEventArgs e)
-        {
-            gamesDataGrid.ItemsSource = await _gameService.GetAllGamesAsync();
         }
     }
 }

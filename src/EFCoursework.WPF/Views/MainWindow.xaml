@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:EFCoursework"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        Background="DimGray"
-        Loaded="Window_LoadedAsync">
+        Background="DimGray">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
