@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:EFCoursework.WPF.Styles">
+    <SolidColorBrush x:Key="BrushDark1" Color="{StaticResource ColorDark1}"/>
+    <SolidColorBrush x:Key="BrushDark2" Color="{StaticResource ColorDark2}"/>
+    <SolidColorBrush x:Key="BrushDark3" Color="{StaticResource ColorDark3}"/>
+    <SolidColorBrush x:Key="BrushLight1" Color="{StaticResource ColorLight1}"/>
+    <SolidColorBrush x:Key="BrushLight2" Color="{StaticResource ColorLight2}"/>
+</ResourceDictionary>

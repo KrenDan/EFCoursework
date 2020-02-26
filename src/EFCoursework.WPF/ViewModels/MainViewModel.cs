@@ -27,8 +27,10 @@ namespace EFCoursework.WPF.ViewModels
             set { Set(ref _games, value); }
         }
 
+        public int GameCount => _games.Count;
+
         private RelayCommand _loadCommand;
-        public RelayCommand LoadCommand
+        public RelayCommand LoadGamesCommand
         {
             get
             {

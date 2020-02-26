@@ -5,18 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EFCoursework.WPF"
         xmlns:vm="clr-namespace:EFCoursework.WPF.ViewModels"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        Background="DimGray">
+        Background="{StaticResource BrushDark1}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadGamesCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ScrollViewer Margin="5">
-            <DataGrid Name="gamesDataGrid" IsReadOnly="True">
+            <DataGrid ItemsSource="{Binding Games}" Name="gamesDataGrid" IsReadOnly="True">
 
             </DataGrid>
         </ScrollViewer>
+        <TextBlock Grid.Column="1" Foreground="{StaticResource BrushLight1}"
+                   FontFamily="{StaticResource DefaultFont}" FontSize="{StaticResource Large}" Text="{Binding GameCount}"></TextBlock>
     </Grid>
 </Window>
