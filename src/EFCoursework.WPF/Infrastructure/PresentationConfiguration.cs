@@ -27,7 +27,8 @@ namespace EFCoursework.WPF.Infrastructure
             services.AddSingleton<IViewModelFactory<MainViewModel>, MainViewModelFactory>();
             services.AddSingleton<IViewModelFactory<GameInfoViewModel>, GameInfoViewModelFactory>();
 
-            services.AddScoped<MainViewModel>();
+            services.AddScoped<GameInfoViewModel>();
+            services.AddScoped(s => s.GetRequiredService<IViewModelFactory<MainViewModel>>().CreateViewModel());
 
             services.AddScoped(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
 

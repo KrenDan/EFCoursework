@@ -15,10 +15,10 @@ namespace EFCoursework.WPF.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        public MainViewModel(IGameService gameService)
+        public MainViewModel(IGameService gameService, GameInfoViewModel gameInfoViewModel)
         {
             _gameService = gameService;
-            GameInfoViewModel = new GameInfoViewModel(gameService);
+            GameInfoViewModel = gameInfoViewModel;
         }
 
         private readonly IGameService _gameService;
