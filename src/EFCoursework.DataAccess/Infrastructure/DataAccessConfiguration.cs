@@ -31,7 +31,7 @@ namespace EFCoursework.DataAccess.Infrastructure
             services.AddTransient<IRepository<Video>, BaseRepository<Video>>();
 
             services.AddDbContext<ApplicationContext>(builder => 
-                builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                builder.UseSqlServer(configuration.GetConnectionString("AzureConnection")));
 
             return services;
         }
