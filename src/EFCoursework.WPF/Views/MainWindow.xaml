@@ -19,12 +19,48 @@
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ScrollViewer Margin="5">
-            <DataGrid ItemsSource="{Binding Games}" Name="gamesDataGrid" IsReadOnly="True">
 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="0.06*"/>
+            </Grid.RowDefinitions>
+
+            <Rectangle Grid.RowSpan="2" Fill="{StaticResource BrushDark2}"/>
+            <DataGrid Margin="5" AutoGenerateColumns="False" ItemsSource="{Binding Games}" SelectedItem="{Binding GameInfoViewModel.SelectedGame}" Name="gamesDataGrid" IsReadOnly="True" 
+                  Opacity="0.6" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" HorizontalGridLinesBrush="{StaticResource BrushDark2}" 
+                  Background="{StaticResource BrushLight1}">
+                <DataGrid.Resources>
+                    <Style TargetType="ScrollBar">
+                        <Setter Property="Background" Value="{StaticResource BrushLight2}" />
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
+                    <DataGridTextColumn Header="Discount" Binding="{Binding Discount}" />
+                    <DataGridTextColumn Header="Release Date" Binding="{Binding ReleaseDate}" />
+                    <DataGridTextColumn Header="Review Score" Binding="{Binding ReviewScore}" />
+                    <DataGridTextColumn Header="Review Percentage" Binding="{Binding ReviewPercentage}" />
+                </DataGrid.Columns>
             </DataGrid>
-        </ScrollViewer>
-        <TextBlock Grid.Column="1" Foreground="{StaticResource BrushLight1}"
-                   FontFamily="{StaticResource DefaultFont}" FontSize="{StaticResource Large}" Text="{Binding GameCount}"></TextBlock>
+            <TextBlock Grid.Row="1" Foreground="{StaticResource BrushLight1}" 
+                       FontFamily="{StaticResource DefaultFont}" FontSize="{StaticResource Large}" Text="{Binding Games.Count, StringFormat='Games count: \{0\}'}">
+            </TextBlock>
+        </Grid>
+
+        <Border Grid.Column="1" BorderBrush="{StaticResource BrushDark2}" BorderThickness="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <DockPanel LastChildFill="False">
+                    <Border DockPanel.Dock="Left" Height="200" Width="200" BorderBrush="{StaticResource BrushDark2}" BorderThickness="10">
+                        <Image Margin="5" HorizontalAlignment="Left" Height="200" Width="200"/>
+                    </Border>
+                </DockPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

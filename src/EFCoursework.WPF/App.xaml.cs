@@ -34,9 +34,6 @@ namespace EFCoursework.WPF
             _serviceProvider = PresentationConfiguration.ConfigureServices(new ServiceCollection(), _configuration)
                 .BuildServiceProvider();
 
-            //var config = new MapperConfiguration(cfg => cfg.AddMaps(new[] { "EFCoursework.BusinessLogic" }));
-            //config.CompileMappings();
-
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }

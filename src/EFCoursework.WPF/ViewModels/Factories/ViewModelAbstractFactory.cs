@@ -8,9 +8,9 @@ namespace EFCoursework.WPF.ViewModels.Factories
     public class ViewModelAbstractFactory : IViewModelAbstractFactory
     {
         private readonly MainViewModelFactory _mainViewModelFactory;
-        private readonly TestViewModelFactory _testViewModelFactory;
+        private readonly GameInfoViewModelFactory _testViewModelFactory;
 
-        public ViewModelAbstractFactory(MainViewModelFactory mainViewModelFactory, TestViewModelFactory testViewModelFactory)
+        public ViewModelAbstractFactory(MainViewModelFactory mainViewModelFactory, GameInfoViewModelFactory testViewModelFactory)
         {
             _mainViewModelFactory = mainViewModelFactory;
             _testViewModelFactory = testViewModelFactory;
@@ -20,9 +20,9 @@ namespace EFCoursework.WPF.ViewModels.Factories
         {
             switch (viewType)
             {
-                case ViewType.Home:
+                case ViewType.Main:
                     return _mainViewModelFactory.CreateViewModel();
-                case ViewType.Page:
+                case ViewType.GameInfo:
                     return _testViewModelFactory.CreateViewModel();
                 default:
                     throw new ArgumentException("ViewType doesn't have a ViewModel.", nameof(viewType));

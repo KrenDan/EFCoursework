@@ -12,7 +12,7 @@ namespace EFCoursework.WPF.ViewModels.Factories
 
     public enum ViewType
     {
-        Home,
-        Page
+        Main,
+        GameInfo
     }
 }

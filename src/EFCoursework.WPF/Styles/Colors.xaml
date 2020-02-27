@@ -4,7 +4,6 @@
     <Color x:Key="ColorDark1">#36293D</Color>
     <Color x:Key="ColorDark2">#2E2533</Color>
     <Color x:Key="ColorDark3">#271630</Color>
-    <Color x:Key="ColorLight1">#A187B0</Color>
+    <Color x:Key="ColorLight1">#DBD8E3</Color>
     <Color x:Key="ColorLight2">#A695B0</Color>
-    <Color x:Key="ColorWhite">#FFFFFF</Color>
 </ResourceDictionary>
