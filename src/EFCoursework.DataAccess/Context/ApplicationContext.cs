@@ -25,6 +25,9 @@ namespace EFCoursework.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Game>()
+                .Property(g => g.Id).ValueGeneratedNever();
+
             modelBuilder.Entity<GameDeveloper>()
                 .HasKey(g => new { g.GameId, g.DeveloperId });
             modelBuilder.Entity<GameDeveloper>()

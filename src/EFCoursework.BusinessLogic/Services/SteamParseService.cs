@@ -13,13 +13,22 @@ namespace EFCoursework.BusinessLogic.Services
 {
     public class SteamParseService : IParseService<IEnumerable<GameDTO>>
     {
+        enum LanguageType
+        {
+            FullAudio,
+            Subtitles,
+            Supported
+        }
+
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly HtmlWeb _web;
 
         public SteamParseService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _web = new HtmlWeb();
         }
 
         public async Task<IEnumerable<GameDTO>> ParseAsync()
@@ -29,16 +38,14 @@ namespace EFCoursework.BusinessLogic.Services
             string infoUrl = "https://steamdb.info/app/1085660/info/";
             string pricesUrl = "https://steamdb.info/app/1085660/";
             string screenshotsUrl = "https://steamdb.info/app/1085660/screenshots/";
-
-            var web = new HtmlWeb();
             
-            var infoDoc = await web.LoadFromWebAsync(infoUrl);
-            var pricesDoc = await web.LoadFromWebAsync(pricesUrl);
-            var screenshotsDoc = await web.LoadFromWebAsync(screenshotsUrl);
+            var infoDoc = await _web.LoadFromWebAsync(infoUrl);
+            var pricesDoc = await _web.LoadFromWebAsync(pricesUrl);
+            var screenshotsDoc = await _web.LoadFromWebAsync(screenshotsUrl);
 
-            string steamUrl = infoDoc.DocumentNode.SelectSingleNode(@"/html/body/div[1]/div[1]/div[2]/div/div/div[2]/div[1]/nav/a[1]").GetAttributeValue("href", "");
+            string steamUrl = GetSteamUrl(infoDoc);
 
-            var steamDoc = await web.LoadFromWebAsync(steamUrl);
+            var steamDoc = await _web.LoadFromWebAsync(steamUrl);
 
             var game = new GameDTO
             {
@@ -61,10 +68,10 @@ namespace EFCoursework.BusinessLogic.Services
                 ClientIconUrl = GetClientIconUrl(infoDoc),
                 LogoUrl = GetLogoUrl(infoDoc),
                 SteamUrl = GetSteamUrl(infoDoc),
-                //IsReleased = GetIsReleased(infoDoc),
-                //InterfaceSupportedLanguages = GetInterfaceSupportedLanguages(infoDoc),
-                //FullAudioSupportedLanguages = GetFullAudioSupportedLanguages(infoDoc),
-                //SubtitlesSupportedLanguages = GetSubtitlesSupportedLanguages(infoDoc)
+                IsReleased = GetIsReleased(infoDoc),
+                FullAudioSupportedLanguages = GetSupportedLanguages(infoDoc, LanguageType.FullAudio),
+                InterfaceSupportedLanguages = GetSupportedLanguages(infoDoc, LanguageType.Supported),
+                SubtitlesSupportedLanguages = GetSupportedLanguages(infoDoc, LanguageType.Subtitles)
             };
 
             result.Add(game);
@@ -94,7 +101,7 @@ namespace EFCoursework.BusinessLogic.Services
         }
         private string GetDescription(HtmlDocument doc)
         {
-            var node = doc.DocumentNode.SelectSingleNode(@"//*[@itemprop='description']");
+            var node = doc.DocumentNode.SelectSingleNode(@"//*[@class='header-description']");
 
             if (node == null)
                 return "";
@@ -106,7 +113,7 @@ namespace EFCoursework.BusinessLogic.Services
             var node = pricesDoc.DocumentNode.SelectSingleNode(@"//*[@data-cc='ua']/../td[2]");
 
             if (node == null)
-                return -1;
+                return 0;
 
             string text = node.InnerText;
             text = text.Substring(0, text.Length - 1);
@@ -125,16 +132,16 @@ namespace EFCoursework.BusinessLogic.Services
             if (node1 == null || node2 == null)
                 return -1;
 
-            string text1 = node1.InnerText;
+            string text1 = node1.InnerText.Replace(",", "");
             int.TryParse(text1, out int scoreGood);
-            string text2 = node1.InnerText;
+            string text2 = node1.InnerText.Replace(",", "");
             int.TryParse(text2, out int scoreBad);
             
             return scoreGood + scoreBad;
         }
         private int GetReviewScore(HtmlDocument doc)
         {
-            var node = doc.DocumentNode.SelectSingleNode(@"//td[.='review_score']/../td[2]");
+            var node = doc.DocumentNode.SelectSingleNode(@"//td[text()='review_score']/../td[2]");
 
             if (node == null)
                 return -1;
@@ -150,41 +157,55 @@ namespace EFCoursework.BusinessLogic.Services
             if (node == null)
                 return -1;
 
-            string text = node.InnerText;
-            text = text.Replace("😋 ", "");
-            text = text.Replace("%", "");
-            int.TryParse(text, out int percentage);
+            string text = string.Concat(node.InnerText.Where(ch => char.IsDigit(ch) || ch == '.'));
+            float.TryParse(text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float percentage);
             return percentage;
         }
         private List<DeveloperDTO> GetDevelopers(HtmlDocument doc)
         {
             var developers = new List<DeveloperDTO>();
-            var node = doc.DocumentNode.SelectSingleNode(@"//*[@itemprop='author']");
+            var nodes = doc.DocumentNode.SelectNodes(@"//*[.='Associations']/../td[2]/ul/li");
 
-            if (node == null)
+            if (nodes == null)
                 return developers;
 
-            string name = node.InnerText;
-            developers.Add(new DeveloperDTO
+            for (int i = 0; i < nodes.Count; i += 2)
             {
-                Name = name
-            });
+                string name = nodes[i].LastChild.InnerText;
+                string type = nodes[i+1].LastChild.InnerText;
+
+                if (type == "developer")
+                {
+                    developers.Add(new DeveloperDTO
+                    {
+                        Name = name
+                    });
+                }
+            }
 
             return developers; 
         }
         private List<PublisherDTO> GetPublishers(HtmlDocument doc)
         {
             var publishers = new List<PublisherDTO>();
-            var node = doc.DocumentNode.SelectSingleNode(@"//*[@itemprop='publisher']");
+            var nodes = doc.DocumentNode.SelectNodes(@"//*[.='Associations']/../td[2]/ul/li");
 
-            if (node == null)
+            if (nodes == null)
                 return publishers;
 
-            string name = node.InnerText;
-            publishers.Add(new PublisherDTO
+            for (int i = 0; i < nodes.Count; i += 2)
             {
-                Name = name
-            });
+                string name = nodes[i].LastChild.InnerText;
+                string type = nodes[i + 1].LastChild.InnerText;
+
+                if (type == "publisher")
+                {
+                    publishers.Add(new PublisherDTO
+                    {
+                        Name = name
+                    });
+                }
+            }
 
             return publishers;
         }
@@ -225,11 +246,8 @@ namespace EFCoursework.BusinessLogic.Services
 
             for (int i = 0; i < genreNodes.Count; i++)
             {
-                string name = genreNodes[i].InnerText;
-                name = name.Replace(" ", "");
-                name = name.Replace("(", "");
-                name = name.Replace(")", "");
-                name = name.Replace(",", "");
+                string name = string.Concat(genreNodes[i].InnerText.Substring(1, genreNodes[i].InnerText.Length - 2)
+                    .Where((ch, i) => char.IsLetter(ch) || char.IsWhiteSpace(ch)));
 
                 genres.Add(new GenreDTO
                 {
@@ -243,18 +261,14 @@ namespace EFCoursework.BusinessLogic.Services
         {
             var tags = new List<TagDTO>();
 
-            var tagNodes = doc.DocumentNode.SelectNodes(@"//*[.='Store Genres']/../td[2]/text()");
+            var tagNodes = doc.DocumentNode.SelectNodes(@"//*[@class='header-thing header-thing-full']/a");
 
             if (tagNodes == null)
                 return tags;
 
             for (int i = 0; i < tagNodes.Count; i++)
             {
-                string name = tagNodes[i].InnerText;
-                name = name.Replace(" ", "");
-                name = name.Replace("(", "");
-                name = name.Replace(")", "");
-                name = name.Replace(",", "");
+                string name = tagNodes[i].GetAttributeValue("aria-label", "");
 
                 tags.Add(new TagDTO
                 {
@@ -301,12 +315,12 @@ namespace EFCoursework.BusinessLogic.Services
         }
         private DateTime GetReleaseDate(HtmlDocument doc)
         {
-            var node = doc.DocumentNode.SelectSingleNode(@"//*[.='Store Release Date']/../td[2]");
+            var node = doc.DocumentNode.SelectSingleNode(@"//*[text()='Original Release Date']/../td[2]");
 
             if (node == null)
                 return new DateTime();
 
-            string text = node.InnerText;
+            string text = string.Concat(node.InnerText.TakeWhile(ch => ch != '('));
             DateTime.TryParseExact(text, "d MMMM yyyy '–' HH':'mm':'ss 'UTC' ", CultureInfo.CreateSpecificCulture("en-US"), DateTimeStyles.None, out DateTime date);
             return date;
         }
@@ -336,6 +350,66 @@ namespace EFCoursework.BusinessLogic.Services
                 return "";
 
             return node.GetAttributeValue("href", "");
+        }
+        private bool GetIsReleased(HtmlDocument doc)
+        {
+            var node = doc.DocumentNode.SelectSingleNode(@"//td[text()='releasestate']/../td[2]");
+
+            if (node == null)
+                return false;
+
+            return node.InnerText == "released";
+        }
+        private List<LanguageDTO> GetSupportedLanguages(HtmlDocument doc, LanguageType languageType)
+        {
+            var languages = new List<LanguageDTO>();
+            var nodes = doc.DocumentNode.SelectNodes(@"//td[text()='Supported Languages']/../td[2]/ul/li");
+
+            if (nodes == null)
+                return languages;
+
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (nodes[i].LastChild.InnerText == "true")
+                {
+                    string[] text = nodes[i].FirstChild.InnerText.Split('/');
+                    string name = string.Concat(text[0].Where(ch => char.IsLetter(ch)).Select((ch, i) => i == 0 ? char.ToUpper(ch) : ch));
+                    string type = string.Concat(text[1].Where(ch => char.IsLetter(ch) || ch == '_'));
+
+                    switch (languageType)
+                    {
+                        case LanguageType.FullAudio:
+                            if (type == "full_audio")
+                            {
+                                languages.Add(new LanguageDTO
+                                {
+                                    Name = name
+                                });
+                            }
+                            break;
+                        case LanguageType.Subtitles:
+                            if (type == "subtitles")
+                            {
+                                languages.Add(new LanguageDTO
+                                {
+                                    Name = name
+                                });
+                            }
+                            break;
+                        case LanguageType.Supported:
+                            if (type == "supported")
+                            {
+                                languages.Add(new LanguageDTO
+                                {
+                                    Name = name
+                                });
+                            }
+                            break;
+                    }
+                }
+            }
+
+            return languages;
         }
     }
 }

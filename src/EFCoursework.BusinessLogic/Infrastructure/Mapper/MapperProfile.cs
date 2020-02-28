@@ -83,6 +83,9 @@ namespace EFCoursework.BusinessLogic.Infrastructure.Mapper
                     {
                         item.Game = dest;
                         item.GameId = dest.Id;
+                        item.FullAudioSupported = src.FullAudioSupportedLanguages.FirstOrDefault(l => l.Id == item.LanguageId) != null;
+                        item.InterfaceSupported = src.InterfaceSupportedLanguages.FirstOrDefault(l => l.Id == item.LanguageId) != null;
+                        item.SubtitlesSupported = src.SubtitlesSupportedLanguages.FirstOrDefault(l => l.Id == item.LanguageId) != null;
                     }
                 });
 
