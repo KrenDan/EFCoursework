@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using EFCoursework.BusinessLogic.Infrastructure.Mapper;
-using EFCoursework.WPF.Infrastructure;
+﻿using EFCoursework.WPF.Infrastructure;
 using EFCoursework.WPF.ViewModels;
 using EFCoursework.WPF.Views;
 using Microsoft.Extensions.Configuration;

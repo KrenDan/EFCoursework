@@ -15,7 +15,7 @@ namespace EFCoursework.DataAccess.Models
         public int Discount { get; set; }
         public int ReviewCount { get; set; }
         public int ReviewScore { get; set; }
-        public int ReviewPercentage { get; set; }
+        public float ReviewPercentage { get; set; }
         public ICollection<GameSystem> SupportedSystems { get; set; }
         public ICollection<GameDeveloper> Developers { get; set; }
         public ICollection<GamePublisher> Publishers { get; set; }

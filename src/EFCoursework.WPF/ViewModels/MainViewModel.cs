@@ -15,13 +15,15 @@ namespace EFCoursework.WPF.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        public MainViewModel(IGameService gameService, GameInfoViewModel gameInfoViewModel)
+        public MainViewModel(IGameService gameService, IParseService<IEnumerable<GameDTO>> parseService, GameInfoViewModel gameInfoViewModel)
         {
             _gameService = gameService;
+            _parseService = parseService;
             GameInfoViewModel = gameInfoViewModel;
         }
 
         private readonly IGameService _gameService;
+        private readonly IParseService<IEnumerable<GameDTO>> _parseService;
 
         public GameInfoViewModel GameInfoViewModel { get; private set; }
 
@@ -58,6 +60,11 @@ namespace EFCoursework.WPF.ViewModels
                 {
                     _loadGamesCommand = new RelayCommand(async () =>
                     {
+                        // parse games to database
+                        var parsedGames = await _parseService.ParseAsync();
+                        await _gameService.InsertGamesAsync(parsedGames);
+
+                        // load games from database
                         var games = await _gameService.GetAllGamesAsync();
                         Games = new ObservableCollection<GameDTO>(games);
                     });

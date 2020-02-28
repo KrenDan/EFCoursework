@@ -15,7 +15,7 @@ namespace EFCoursework.BusinessLogic.DTO
         public int Discount { get; set; }
         public int ReviewCount { get; set; }
         public int ReviewScore { get; set; }
-        public int ReviewPercentage { get; set; }
+        public float ReviewPercentage { get; set; }
         public ICollection<OSDTO> SupportedSystems { get; set; }
         public ICollection<DeveloperDTO> Developers { get; set; }
         public ICollection<PublisherDTO> Publishers { get; set; }

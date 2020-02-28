@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EFCoursework.BusinessLogic.Services
 {
-    public interface IParseService
+    public interface IParseService<T>
     {
-        T Parse<T>(string url);
+        Task<T> ParseAsync();
     }
 }

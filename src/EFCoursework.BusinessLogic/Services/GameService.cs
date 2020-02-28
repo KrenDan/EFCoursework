@@ -26,5 +26,15 @@ namespace EFCoursework.BusinessLogic.Services
             var games = await _unitOfWork.Games.GetAllAsync();
             return _mapper.Map<IEnumerable<GameDTO>>(games);
         }
+
+        public async Task InsertGamesAsync(IEnumerable<GameDTO> games)
+        {
+            foreach (var game in games)
+            {
+                var gameModel = _mapper.Map<Game>(game);
+                await _unitOfWork.Games.InsertAsync(gameModel);
+                await _unitOfWork.SaveChangesAsync();
+            }
+        }
     }
 }

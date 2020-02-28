@@ -9,5 +9,6 @@ namespace EFCoursework.BusinessLogic.Services
     public interface IGameService
     {
         Task<IEnumerable<GameDTO>> GetAllGamesAsync();
+        Task InsertGamesAsync(IEnumerable<GameDTO> games);
     }
 }

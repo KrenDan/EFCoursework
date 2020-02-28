@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EFCoursework.BusinessLogic.DTO;
 using EFCoursework.BusinessLogic.Infrastructure;
 using EFCoursework.BusinessLogic.Infrastructure.Mapper;
 using EFCoursework.BusinessLogic.Services;
@@ -22,6 +23,7 @@ namespace EFCoursework.WPF.Infrastructure
 
             services.AddAutoMapper(Assembly.GetAssembly(typeof(MapperProfile)));
             services.AddTransient<IGameService, GameService>();
+            services.AddTransient<IParseService<IEnumerable<GameDTO>>, SteamParseService>();
 
             services.AddSingleton<IViewModelAbstractFactory, ViewModelAbstractFactory>();
             services.AddSingleton<IViewModelFactory<MainViewModel>, MainViewModelFactory>();
