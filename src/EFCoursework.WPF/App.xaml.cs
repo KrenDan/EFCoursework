@@ -29,8 +29,9 @@ namespace EFCoursework.WPF
                 .AddJsonFile("appsettings.json");
             _configuration = builder.Build();
 
-            _serviceProvider = PresentationConfiguration.ConfigureServices(new ServiceCollection(), _configuration)
-                .BuildServiceProvider();
+            var services = new ServiceCollection();
+            PresentationConfiguration.ConfigureServices(services, _configuration);
+            _serviceProvider = services.BuildServiceProvider();
 
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();

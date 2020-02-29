@@ -1,6 +1,7 @@
 ﻿using EFCoursework.DataAccess.Context;
 using EFCoursework.DataAccess.Models;
 using EFCoursework.DataAccess.Repositories;
+using EFCoursework.DataAccess.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,10 +13,13 @@ namespace EFCoursework.DataAccess.Infrastructure
 {
     public static class DataAccessConfiguration
     {
-        public static IServiceCollection ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddDbContext<DbContext, ApplicationContext>(builder =>
+                builder.UseSqlServer(configuration.GetConnectionString("AzureConnection")));
+
+            services.AddTransient<IRepository<Game>, GameRepository>();
             services.AddTransient<IRepository<Developer>, BaseRepository<Developer>>();
-            services.AddTransient<IRepository<Game>, BaseRepository<Game>>();
             services.AddTransient<IRepository<GameDeveloper>, BaseRepository<GameDeveloper>>();
             services.AddTransient<IRepository<GameGenre>, BaseRepository<GameGenre>>();
             services.AddTransient<IRepository<GameLanguage>, BaseRepository<GameLanguage>>();
@@ -30,10 +34,7 @@ namespace EFCoursework.DataAccess.Infrastructure
             services.AddTransient<IRepository<Tag>, BaseRepository<Tag>>();
             services.AddTransient<IRepository<Video>, BaseRepository<Video>>();
 
-            services.AddDbContext<ApplicationContext>(builder => 
-                builder.UseSqlServer(configuration.GetConnectionString("AzureConnection")));
-
-            return services;
+            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         }
     }
 }

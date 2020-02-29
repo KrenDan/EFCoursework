@@ -28,6 +28,24 @@ namespace EFCoursework.DataAccess.Context
             modelBuilder.Entity<Game>()
                 .Property(g => g.Id).ValueGeneratedNever();
 
+            modelBuilder.Entity<Game>().HasIndex(g => g.Name).IsUnique();
+            modelBuilder.Entity<Game>().HasIndex(g => g.Description).IsUnique();
+            modelBuilder.Entity<Game>().HasIndex(g => g.SteamUrl).IsUnique();
+            modelBuilder.Entity<Game>().HasIndex(g => g.ClientIconUrl).IsUnique();
+            modelBuilder.Entity<Game>().HasIndex(g => g.LogoUrl).IsUnique();
+            modelBuilder.Entity<Language>().HasIndex(l => l.Name).IsUnique();
+            modelBuilder.Entity<Tag>().HasIndex(t => t.Name).IsUnique();
+            modelBuilder.Entity<OS>().HasIndex(o => o.Name).IsUnique();
+            modelBuilder.Entity<Developer>().HasIndex(d => d.Name).IsUnique();
+            modelBuilder.Entity<Developer>().HasIndex(d => d.LogoUrl).IsUnique();
+            modelBuilder.Entity<Publisher>().HasIndex(p => p.Name).IsUnique();
+            modelBuilder.Entity<Publisher>().HasIndex(p => p.LogoUrl).IsUnique();
+            modelBuilder.Entity<OS>().HasIndex(o => o.Name).IsUnique();
+            modelBuilder.Entity<OS>().HasIndex(o => o.Icon).IsUnique();
+            modelBuilder.Entity<Genre>().HasIndex(g => g.Name).IsUnique();
+            modelBuilder.Entity<Image>().HasIndex(i => i.Url).IsUnique();
+            modelBuilder.Entity<Video>().HasIndex(i => i.Url).IsUnique();
+
             modelBuilder.Entity<GameDeveloper>()
                 .HasKey(g => new { g.GameId, g.DeveloperId });
             modelBuilder.Entity<GameDeveloper>()

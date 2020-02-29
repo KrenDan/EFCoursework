@@ -17,13 +17,9 @@ namespace EFCoursework.WPF.Infrastructure
 {
     public static class PresentationConfiguration
     {
-        public static IServiceCollection ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             BusinessConfiguration.ConfigureServices(services, configuration);
-
-            services.AddAutoMapper(Assembly.GetAssembly(typeof(MapperProfile)));
-            services.AddTransient<IGameService, GameService>();
-            services.AddTransient<IParseService<IEnumerable<GameDTO>>, SteamParseService>();
 
             services.AddSingleton<IViewModelAbstractFactory, ViewModelAbstractFactory>();
             services.AddSingleton<IViewModelFactory<MainViewModel>, MainViewModelFactory>();
@@ -33,8 +29,6 @@ namespace EFCoursework.WPF.Infrastructure
             services.AddScoped(s => s.GetRequiredService<IViewModelFactory<MainViewModel>>().CreateViewModel());
 
             services.AddScoped(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
-
-            return services;
         }
     }
 }

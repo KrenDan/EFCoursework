@@ -1,4 +1,5 @@
-﻿using EFCoursework.DataAccess.Models;
+﻿using EFCoursework.DataAccess.Infrastructure;
+using EFCoursework.DataAccess.Models;
 using EFCoursework.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,6 @@ namespace EFCoursework.DataAccess.UnitOfWork
         IRepository<Tag> Tags { get; }
         IRepository<Video> Videos { get; }
 
-        Task SaveChangesAsync();
+        Task<OperationInfo> SaveChangesAsync();
     }
 }

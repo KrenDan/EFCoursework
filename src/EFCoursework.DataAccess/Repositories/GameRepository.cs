@@ -1,4 +1,6 @@
-﻿using EFCoursework.DataAccess.Models;
+﻿using EFCoursework.DataAccess.Context;
+using EFCoursework.DataAccess.Infrastructure;
+using EFCoursework.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,16 @@ namespace EFCoursework.DataAccess.Repositories
 
         public override async Task<IReadOnlyCollection<Game>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync().ConfigureAwait(false);
+            return await _dbSet
+                .Include(g => g.SupportedSystems)
+                .Include(g => g.Developers)
+                .Include(g => g.Publishers)
+                .Include(g => g.Genres)
+                .Include(g => g.Tags)
+                .Include(g => g.Screenshots)
+                .Include(g => g.Videos)
+                .Include(g => g.SupportedLanguages)
+                .ToListAsync().ConfigureAwait(false);
         }
 
         public override async Task<IReadOnlyCollection<Game>> GetAsync(Expression<Func<Game, bool>> predicate)

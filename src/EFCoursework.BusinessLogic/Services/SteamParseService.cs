@@ -35,9 +35,9 @@ namespace EFCoursework.BusinessLogic.Services
         {
             var result = new List<GameDTO>();
 
-            string infoUrl = "https://steamdb.info/app/1085660/info/";
-            string pricesUrl = "https://steamdb.info/app/1085660/";
-            string screenshotsUrl = "https://steamdb.info/app/1085660/screenshots/";
+            string infoUrl = "https://steamdb.info/app/70/info/";
+            string pricesUrl = "https://steamdb.info/app/70/";
+            string screenshotsUrl = "https://steamdb.info/app/70/screenshots/";
             
             var infoDoc = await _web.LoadFromWebAsync(infoUrl);
             var pricesDoc = await _web.LoadFromWebAsync(pricesUrl);
@@ -50,7 +50,7 @@ namespace EFCoursework.BusinessLogic.Services
             var game = new GameDTO
             {
                 Id = GetAppId(infoDoc),
-                Title = GetName(infoDoc),
+                Name = GetName(infoDoc),
                 Description = GetDescription(infoDoc),
                 Price = GetPrice(pricesDoc),
                 Discount = GetDiscount(infoDoc),
