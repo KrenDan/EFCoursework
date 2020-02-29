@@ -38,9 +38,6 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                     <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
-                    <DataGridTextColumn Header="Discount" Binding="{Binding Discount}" />
-                    <DataGridTextColumn Header="Release Date" Binding="{Binding ReleaseDate}" />
-                    <DataGridTextColumn Header="Review Score" Binding="{Binding ReviewScore}" />
                     <DataGridTextColumn Header="Review Percentage" Binding="{Binding ReviewPercentage}" />
                 </DataGrid.Columns>
             </DataGrid>
@@ -57,7 +54,7 @@
                 </Grid.RowDefinitions>
                 <DockPanel LastChildFill="False">
                     <Border DockPanel.Dock="Left" Height="200" Width="200" BorderBrush="{StaticResource BrushDark2}" BorderThickness="10">
-                        <Image Margin="5" Stretch="Fill" Source="{Binding LogoUrl}"/>
+                        <Image Margin="5" Stretch="Fill" Source="{Binding GameInfoViewModel.SelectedGame.LogoUrl}"/>
                     </Border>
                 </DockPanel>
             </Grid>

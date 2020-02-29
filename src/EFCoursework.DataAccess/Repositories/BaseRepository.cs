@@ -30,9 +30,9 @@ namespace EFCoursework.DataAccess.Repositories
             return await _dbSet.Where(predicate).ToListAsync().ConfigureAwait(false);
         }
 
-        public virtual async Task InsertAsync(T entity)
+        public virtual async Task InsertAsync(params T[] entities)
         {
-            await _dbSet.AddAsync(entity).ConfigureAwait(false);
+            await _dbSet.AddRangeAsync(entities).ConfigureAwait(false);
         }
 
         public void Dispose()

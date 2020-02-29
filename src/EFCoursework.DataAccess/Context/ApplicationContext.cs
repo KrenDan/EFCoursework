@@ -1,7 +1,10 @@
 ﻿using EFCoursework.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace EFCoursework.DataAccess.Context
@@ -10,7 +13,7 @@ namespace EFCoursework.DataAccess.Context
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         public DbSet<Game> Games { get; set; }
@@ -28,20 +31,17 @@ namespace EFCoursework.DataAccess.Context
             modelBuilder.Entity<Game>()
                 .Property(g => g.Id).ValueGeneratedNever();
 
-            modelBuilder.Entity<Game>().HasIndex(g => g.Name).IsUnique();
             modelBuilder.Entity<Game>().HasIndex(g => g.Description).IsUnique();
             modelBuilder.Entity<Game>().HasIndex(g => g.SteamUrl).IsUnique();
             modelBuilder.Entity<Game>().HasIndex(g => g.ClientIconUrl).IsUnique();
             modelBuilder.Entity<Game>().HasIndex(g => g.LogoUrl).IsUnique();
             modelBuilder.Entity<Language>().HasIndex(l => l.Name).IsUnique();
             modelBuilder.Entity<Tag>().HasIndex(t => t.Name).IsUnique();
-            modelBuilder.Entity<OS>().HasIndex(o => o.Name).IsUnique();
             modelBuilder.Entity<Developer>().HasIndex(d => d.Name).IsUnique();
             modelBuilder.Entity<Developer>().HasIndex(d => d.LogoUrl).IsUnique();
             modelBuilder.Entity<Publisher>().HasIndex(p => p.Name).IsUnique();
             modelBuilder.Entity<Publisher>().HasIndex(p => p.LogoUrl).IsUnique();
             modelBuilder.Entity<OS>().HasIndex(o => o.Name).IsUnique();
-            modelBuilder.Entity<OS>().HasIndex(o => o.Icon).IsUnique();
             modelBuilder.Entity<Genre>().HasIndex(g => g.Name).IsUnique();
             modelBuilder.Entity<Image>().HasIndex(i => i.Url).IsUnique();
             modelBuilder.Entity<Video>().HasIndex(i => i.Url).IsUnique();
@@ -107,6 +107,21 @@ namespace EFCoursework.DataAccess.Context
             modelBuilder.Entity<Game>()
                 .HasMany(g => g.Videos)
                 .WithOne(v => v.Game);
+        }
+    }
+
+    public class ApplicationContextFactory : IDesignTimeDbContextFactory<ApplicationContext>
+    {
+        public ApplicationContext CreateDbContext(string[] args)
+        {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../EFCoursework.WPF"))
+                .AddJsonFile("appsettings.json").Build();
+
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+            var connectionString = config.GetConnectionString("AzureConnection");
+            optionsBuilder.UseSqlServer(connectionString);
+            return new ApplicationContext(optionsBuilder.Options);
         }
     }
 }

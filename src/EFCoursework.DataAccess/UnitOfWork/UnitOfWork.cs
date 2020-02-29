@@ -74,7 +74,7 @@ namespace EFCoursework.DataAccess.UnitOfWork
             {
                 return new OperationInfo
                 {
-                    Message = $"Failed to insert entity to database.",
+                    Message = $"Failed to insert to database.",
                     Exception = ex
                 };
             }

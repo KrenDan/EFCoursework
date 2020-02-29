@@ -19,7 +19,9 @@ namespace EFCoursework.WPF.ViewModels
         private GameDTO _selectedGame;
         public GameDTO SelectedGame 
         {
-            get { return _selectedGame; }
+            get { 
+                return _selectedGame; 
+            }
             set { Set(ref _selectedGame, value); }
         }
     }

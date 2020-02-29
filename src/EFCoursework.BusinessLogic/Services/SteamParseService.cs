@@ -228,8 +228,7 @@ namespace EFCoursework.BusinessLogic.Services
                 string icon = nodes[i].FirstChild.GetAttributeValue("d", "");
                 systems.Add(new OSDTO
                 {
-                    Name = names[i],
-                    Icon = icon
+                    Name = names[i]
                 });
             }
 

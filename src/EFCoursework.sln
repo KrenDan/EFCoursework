@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCoursework.WPF", "EFCoursework.WPF\EFCoursework.WPF.csproj", "{555C45A5-BDDA-4377-859F-C8FC260A8688}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoursework.BusinessLogic", "EFCoursework.BusinessLogic\EFCoursework.BusinessLogic.csproj", "{18A4BF3D-47AA-40AC-BB4F-C65D22541564}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCoursework.BusinessLogic", "EFCoursework.BusinessLogic\EFCoursework.BusinessLogic.csproj", "{18A4BF3D-47AA-40AC-BB4F-C65D22541564}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoursework.DataAccess", "EFCoursework.DataAccess\EFCoursework.DataAccess.csproj", "{205B7D8B-DBF6-4ED8-B0B0-AFEDF43810C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCoursework.DataAccess", "EFCoursework.DataAccess\EFCoursework.DataAccess.csproj", "{205B7D8B-DBF6-4ED8-B0B0-AFEDF43810C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

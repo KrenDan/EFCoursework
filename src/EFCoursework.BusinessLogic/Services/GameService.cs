@@ -33,8 +33,8 @@ namespace EFCoursework.BusinessLogic.Services
             {
                 var gameModel = _mapper.Map<Game>(game);
                 await _unitOfWork.Games.InsertAsync(gameModel);
-                await _unitOfWork.SaveChangesAsync();
             }
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

@@ -61,8 +61,8 @@ namespace EFCoursework.WPF.ViewModels
                     _loadGamesCommand = new RelayCommand(async () =>
                     {
                         // parse games to database
-                        var parsedGames = await _parseService.ParseAsync();
-                        await _gameService.InsertGamesAsync(parsedGames);
+                        //var parsedGames = await _parseService.ParseAsync();
+                        //await _gameService.InsertGamesAsync(parsedGames);
 
                         // load games from database
                         var games = await _gameService.GetAllGamesAsync();

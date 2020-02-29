@@ -88,7 +88,6 @@ namespace EFCoursework.BusinessLogic.Infrastructure.Mapper
             CreateMap<GameSystem, OSDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.OSId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.OS.Name))
-                .ForMember(dest => dest.Icon, opt => opt.MapFrom(src => src.OS.Icon))
                 .ForMember(dest => dest.Games, opt => opt.Ignore());
 
             CreateMap<GameDeveloper, DeveloperDTO>()
