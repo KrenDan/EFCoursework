@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace EFCoursework.BusinessLogic.Services
 {
@@ -97,7 +98,7 @@ namespace EFCoursework.BusinessLogic.Services
             if (node == null)
                 return "";
 
-            return node.InnerText;
+            return HttpUtility.HtmlDecode(node.InnerText);
         }
         private string GetDescription(HtmlDocument doc)
         {
@@ -106,7 +107,7 @@ namespace EFCoursework.BusinessLogic.Services
             if (node == null)
                 return "";
 
-            return node.InnerText;
+            return HttpUtility.HtmlDecode(node.InnerText);
         }
         private decimal GetPrice(HtmlDocument pricesDoc)
         {
@@ -314,7 +315,7 @@ namespace EFCoursework.BusinessLogic.Services
         }
         private DateTime GetReleaseDate(HtmlDocument doc)
         {
-            var node = doc.DocumentNode.SelectSingleNode(@"//*[text()='Original Release Date']/../td[2]");
+            var node = doc.DocumentNode.SelectSingleNode(@"//*[text()='Release Date']/../td[2]");
 
             if (node == null)
                 return new DateTime();
@@ -334,12 +335,12 @@ namespace EFCoursework.BusinessLogic.Services
         }
         private string GetLogoUrl(HtmlDocument doc)
         {
-            var node = doc.DocumentNode.SelectSingleNode(@"//*[.='logo']/../td[2]/a");
+            var node = doc.DocumentNode.SelectSingleNode(@"//img[@class='app-logo']");
 
             if (node == null)
                 return "";
 
-            return node.GetAttributeValue("href", "");
+            return node.GetAttributeValue("src", "");
         }
         private string GetSteamUrl(HtmlDocument doc)
         {
