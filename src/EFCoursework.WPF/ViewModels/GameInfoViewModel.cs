@@ -16,13 +16,32 @@ namespace EFCoursework.WPF.ViewModels
 
         private readonly IGameService _gameService;
 
-        private GameDTO _selectedGame;
-        public GameDTO SelectedGame 
+        private string _name;
+        public string Name
         {
-            get { 
-                return _selectedGame; 
-            }
-            set { Set(ref _selectedGame, value); }
+            get { return _name; }
+            set { Set(ref _name, value); }
+        }
+
+        private string _description;
+        public string Description
+        {
+            get { return _description; }
+            set { Set(ref _description, value); }
+        }
+
+        private string _logoUrl;
+        public string LogoUrl
+        {
+            get { return _logoUrl; }
+            set { Set(ref _logoUrl, value); }
+        }
+
+        public void SetGame(GameDTO game)
+        {
+            Name = game.Name;
+            Description = game.Description;
+            LogoUrl = game.LogoUrl;
         }
     }
 }

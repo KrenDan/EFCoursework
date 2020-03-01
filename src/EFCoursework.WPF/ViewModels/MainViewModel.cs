@@ -34,23 +34,23 @@ namespace EFCoursework.WPF.ViewModels
             set { Set(ref _games, value); }
         }
 
-        #region commands
-        private RelayCommand<object> _chooseGameCommand;
-        public RelayCommand<object> ChooseGameCommand
+        private GameDTO _selectedGame;
+        public GameDTO SelectedGame
         {
             get
             {
-                if (_chooseGameCommand == null)
-                {
-                    _chooseGameCommand = new RelayCommand<object>((obj) =>
-                    {
-                        GameInfoViewModel.SelectedGame = obj as GameDTO;
-                    });
-                }
-                return _chooseGameCommand;
+                return _selectedGame;
+            }
+            set
+            {
+                if (value == null)
+                    return;
+                Set(ref _selectedGame, value);
+                GameInfoViewModel.SetGame(_selectedGame);
             }
         }
 
+        #region commands
         private RelayCommand _loadGamesCommand;
         public RelayCommand LoadGamesCommand
         {

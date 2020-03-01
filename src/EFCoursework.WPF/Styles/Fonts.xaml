@@ -2,8 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:local="clr-namespace:EFCoursework.WPF.Styles">
-    <FontFamily x:Key="DefaultFont">Consolas</FontFamily>
-    <sys:Double x:Key="Small">14</sys:Double>
-    <sys:Double x:Key="Regular">16</sys:Double>
-    <sys:Double x:Key="Large">20</sys:Double>
+    <FontFamily x:Key="DefaultFont">Calibri</FontFamily>
+    <sys:Double x:Key="Small">16</sys:Double>
+    <sys:Double x:Key="Regular">18</sys:Double>
+    <sys:Double x:Key="Large">24</sys:Double>
+    <sys:Double x:Key="Title">40</sys:Double>
 </ResourceDictionary>

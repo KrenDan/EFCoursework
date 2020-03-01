@@ -6,58 +6,85 @@
         xmlns:local="clr-namespace:EFCoursework.WPF"
         xmlns:vm="clr-namespace:EFCoursework.WPF.ViewModels"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:conv="clr-namespace:EFCoursework.WPF.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Background="{StaticResource BrushDark1}">
+        Title="MainWindow" Height="900" Width="1600"
+        Background="{StaticResource DarkBrush1}">
+    <Window.Resources>
+        <conv:BoolVisibilityConverter x:Key="boolVisibility"/>
+    </Window.Resources>
+    
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadGamesCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Grid>
+    
+    <Grid Background="{StaticResource InvertedMainBackgroundBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Grid>
+        <Grid Margin="10" Background="{StaticResource MainBackgroundBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="0.06*"/>
             </Grid.RowDefinitions>
 
-            <Rectangle Grid.RowSpan="2" Fill="{StaticResource BrushDark2}"/>
-            <DataGrid Margin="5" AutoGenerateColumns="False" ItemsSource="{Binding Games}" SelectedItem="{Binding GameInfoViewModel.SelectedGame}" Name="gamesDataGrid" IsReadOnly="True" 
-                  Opacity="0.6" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" HorizontalGridLinesBrush="{StaticResource BrushDark2}" 
-                  Background="{StaticResource BrushLight1}">
-                <DataGrid.Resources>
-                    <Style TargetType="ScrollBar">
-                        <Setter Property="Background" Value="{StaticResource BrushLight2}" />
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
-                    <DataGridTextColumn Header="Review Percentage" Binding="{Binding ReviewPercentage}" />
-                </DataGrid.Columns>
-            </DataGrid>
-            <TextBlock Grid.Row="1" Foreground="{StaticResource BrushLight1}" 
-                       FontFamily="{StaticResource DefaultFont}" FontSize="{StaticResource Large}" Text="{Binding Games.Count, StringFormat='Games count: \{0\}'}">
+            <ListView ItemsSource="{Binding Games}" 
+                      SelectedItem="{Binding SelectedGame}" 
+                      Name="gamesDataGrid" Opacity="0.6" 
+                      ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      ScrollViewer.CanContentScroll="False"
+                      Background="{StaticResource LightBrush1}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Icon">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Image Width="40" Height="40" Source="{StaticResource IconPlaceholder}"/>
+                                        <Image Width="40" Height="40" Source="{Binding ClientIconUrl}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Price}" Header="Price"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding ReviewPercentage}" Header="Review Percentage"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <TextBlock Grid.Row="1"
+                       Foreground="{StaticResource LightBrush1}" 
+                       FontFamily="{StaticResource DefaultFont}" 
+                       FontSize="{StaticResource Large}" 
+                       Text="{Binding Games.Count, StringFormat='Games count: \{0\}'}">
             </TextBlock>
         </Grid>
 
-        <Border Grid.Column="1" BorderBrush="{StaticResource BrushDark2}" BorderThickness="10">
-            <Grid>
+        <Grid Grid.Column="1" Margin="10"
+                Background="{StaticResource MainBackgroundBrush}"
+                Visibility="{Binding SelectedGame, Converter={StaticResource boolVisibility}}">
+            <Grid DataContext="{Binding GameInfoViewModel}">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <DockPanel LastChildFill="False">
-                    <Border DockPanel.Dock="Left" Height="200" Width="200" BorderBrush="{StaticResource BrushDark2}" BorderThickness="10">
-                        <Image Margin="5" Stretch="Fill" Source="{Binding GameInfoViewModel.SelectedGame.LogoUrl}"/>
+                    <Border DockPanel.Dock="Left" BorderBrush="{StaticResource DarkBrush3}" BorderThickness="5">
+                        <Image Margin="5" Stretch="Fill" Source="{Binding LogoUrl}"/>
                     </Border>
                 </DockPanel>
+                <DockPanel Grid.Row="1">
+                    <TextBlock DockPanel.Dock="Top" Margin="10" Style="{StaticResource NameTextBlock}"
+                               Text="{Binding Name}"/>
+                    <TextBlock DockPanel.Dock="Bottom" Margin="10" Style="{StaticResource DescriptionTextBlock}"
+                               Text="{Binding Description}"/>
+                </DockPanel>
             </Grid>
-        </Border>
+        </Grid>
     </Grid>
 </Window>
