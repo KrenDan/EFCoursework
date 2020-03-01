@@ -50,63 +50,77 @@ namespace EFCoursework.DataAccess.Context
                 .HasKey(g => new { g.GameId, g.DeveloperId });
             modelBuilder.Entity<GameDeveloper>()
                 .HasOne(g => g.Game)
-                .WithMany(g => g.Developers);
+                .WithMany(g => g.Developers)
+                .OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<GameDeveloper>()
                 .HasOne(g => g.Developer)
-                .WithMany(g => g.GameDevelopers);
+                .WithMany(g => g.GameDevelopers)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             modelBuilder.Entity<GameGenre>()
                 .HasKey(g => new { g.GameId, g.GenreId });
             modelBuilder.Entity<GameGenre>()
                 .HasOne(g => g.Game)
-                .WithMany(g => g.Genres);
+                .WithMany(g => g.Genres)
+                .OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<GameGenre>()
                 .HasOne(g => g.Genre)
-                .WithMany(g => g.GameGenres);
+                .WithMany(g => g.GameGenres)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             modelBuilder.Entity<GameLanguage>()
                 .HasKey(g => new { g.GameId, g.LanguageId });
             modelBuilder.Entity<GameLanguage>()
                 .HasOne(g => g.Game)
-                .WithMany(g => g.SupportedLanguages);
+                .WithMany(g => g.SupportedLanguages)
+                .OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<GameLanguage>()
                 .HasOne(g => g.Language)
-                .WithMany(g => g.GameLanguages);
+                .WithMany(g => g.GameLanguages)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             modelBuilder.Entity<GamePublisher>()
                 .HasKey(g => new { g.GameId, g.PublisherId });
             modelBuilder.Entity<GamePublisher>()
                 .HasOne(g => g.Game)
-                .WithMany(g => g.Publishers);
+                .WithMany(g => g.Publishers)
+                .OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<GamePublisher>()
                 .HasOne(g => g.Publisher)
-                .WithMany(g => g.GamePublishers);
+                .WithMany(g => g.GamePublishers)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             modelBuilder.Entity<GameSystem>()
                 .HasKey(g => new { g.GameId, g.OSId });
             modelBuilder.Entity<GameSystem>()
                 .HasOne(g => g.Game)
-                .WithMany(g => g.SupportedSystems);
+                .WithMany(g => g.SupportedSystems)
+                .OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<GameSystem>()
                 .HasOne(g => g.OS)
-                .WithMany(g => g.GameSystems);
+                .WithMany(g => g.GameSystems)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             modelBuilder.Entity<GameTag>()
                 .HasKey(g => new { g.GameId, g.TagId });
             modelBuilder.Entity<GameTag>()
                 .HasOne(g => g.Game)
-                .WithMany(g => g.Tags);
+                .WithMany(g => g.Tags)
+                .OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<GameTag>()
                 .HasOne(g => g.Tag)
-                .WithMany(g => g.GameTags);
+                .WithMany(g => g.GameTags)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
-            modelBuilder.Entity<Game>()
-                .HasMany(g => g.Screenshots)
-                .WithOne(s => s.Game);
+            modelBuilder.Entity<Image>()
+                .HasOne(i => i.Game)
+                .WithMany(g => g.Screenshots)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
-            modelBuilder.Entity<Game>()
-                .HasMany(g => g.Videos)
-                .WithOne(v => v.Game);
+            modelBuilder.Entity<Video>()
+                .HasOne(i => i.Game)
+                .WithMany(g => g.Videos)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 

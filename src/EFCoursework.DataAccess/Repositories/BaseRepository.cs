@@ -35,6 +35,12 @@ namespace EFCoursework.DataAccess.Repositories
             await _dbSet.AddRangeAsync(entities).ConfigureAwait(false);
         }
 
+        public async Task DeleteAsync(Expression<Func<T, bool>> predicate)
+        {
+            var games = _dbSet.Where(predicate);
+            _dbSet.RemoveRange(games);
+        }
+
         public void Dispose()
         {
             _context.Dispose();

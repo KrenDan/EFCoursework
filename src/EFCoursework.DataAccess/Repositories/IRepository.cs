@@ -12,5 +12,6 @@ namespace EFCoursework.DataAccess.Repositories
         Task<IReadOnlyCollection<T>> GetAllAsync();
         Task<IReadOnlyCollection<T>> GetAsync(Expression<Func<T, bool>> predicate);
         Task InsertAsync(params T[] entities);
+        Task DeleteAsync(Expression<Func<T, bool>> predicate);
     }
 }
