@@ -21,14 +21,14 @@ namespace EFCoursework.DataAccess.Repositories
         public override async Task<IReadOnlyCollection<Game>> GetAllAsync()
         {
             return await _dbSet
-                .Include(g => g.SupportedSystems)
-                .Include(g => g.Developers)
-                .Include(g => g.Publishers)
-                .Include(g => g.Genres)
-                .Include(g => g.Tags)
-                .Include(g => g.Screenshots)
-                .Include(g => g.Videos)
-                .Include(g => g.SupportedLanguages)
+                //.Include(g => g.SupportedSystems)
+                //.Include(g => g.Developers)
+                //.Include(g => g.Publishers)
+                //.Include(g => g.Genres)
+                //.Include(g => g.Tags)
+                //.Include(g => g.Screenshots)
+                //.Include(g => g.Videos)
+                //.Include(g => g.SupportedLanguages)
                 .ToListAsync().ConfigureAwait(false);
         }
 

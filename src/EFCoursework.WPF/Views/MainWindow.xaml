@@ -48,11 +48,11 @@
                 </Button>
             </Grid>
 
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <Button Margin="0,5,0,5" Width="510" Command="{Binding AddGameOpenWindowCommand}">
+            <Grid Grid.Row="1">
+                <Button Margin="0,5,0,5" Command="{Binding AddGameOpenWindowCommand}">
                     <TextBlock Text="Add game by App Id"/>
                 </Button>
-            </StackPanel>
+            </Grid>
 
             <ListView Grid.Row="2" Style="{StaticResource GameListView}"
                       ItemsSource="{Binding Games}" 
@@ -89,17 +89,46 @@
               Visibility="{Binding SelectedGame, Converter={StaticResource boolVisibility}}">
             <Grid DataContext="{Binding GameInfoViewModel}">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
+                    <RowDefinition Height="1.4*"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid>
-                    <Border BorderBrush="{StaticResource DarkBrush3}" BorderThickness="5">
-                        <Image Margin="5" Stretch="Uniform" Source="{Binding LogoUrl}"/>
-                    </Border>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4*"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border BorderBrush="{StaticResource DarkBrush3}" BorderThickness="5">
+                            <Image Margin="5" Stretch="Uniform" Source="{Binding LogoUrl}"/>
+                        </Border>
+                        <TextBlock Grid.Row="1" DockPanel.Dock="Top" Margin="10" Style="{StaticResource NameTextBlock}"
+                               Text="{Binding Name}"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding Price, StringFormat='Current price: \{0\}₴'}" Margin="10"
+                                   Style="{StaticResource GameInfoTextBlock}"/>
+                        <TextBlock Grid.Row="1" Text="{Binding ReleaseDate, StringFormat='Release date: \{0\}'}" Margin="10"
+                                   Style="{StaticResource GameInfoTextBlock}"/>
+                        <TextBlock Grid.Row="2" Text="{Binding ReviewCount, StringFormat='Reviews: \{0\}'}" Margin="10"
+                                   Style="{StaticResource GameInfoTextBlock}"/>
+                        <TextBlock Grid.Row="3" Text="{Binding ReviewPercentage, StringFormat='\{0\}% positive'}" Margin="10"
+                                   Style="{StaticResource GameInfoTextBlock}"/>
+                        <TextBlock Grid.Row="4" Text="{Binding SteamUrl, StringFormat='Steam page: \{0\}'}" Margin="10"
+                                   Style="{StaticResource GameInfoTextBlock}"/>
+                    </Grid>
                 </Grid>
                 <DockPanel Grid.Row="1">
-                    <TextBlock DockPanel.Dock="Top" Margin="10" Style="{StaticResource NameTextBlock}"
-                               Text="{Binding Name}"/>
                     <TextBlock DockPanel.Dock="Bottom" Margin="10" Style="{StaticResource DescriptionTextBlock}"
                                Text="{Binding Description}"/>
                 </DockPanel>
