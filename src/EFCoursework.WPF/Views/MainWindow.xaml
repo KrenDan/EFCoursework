@@ -9,7 +9,8 @@
         xmlns:conv="clr-namespace:EFCoursework.WPF.Converters"
         mc:Ignorable="d"
         Title="Game Parser" Height="900" Width="1600"
-        Background="{StaticResource DarkBrush1}">
+        Background="{StaticResource DarkBrush1}"
+        x:Name="mainWindow">
     <Window.Resources>
         <conv:BoolVisibilityConverter x:Key="boolVisibility"/>
     </Window.Resources>
@@ -40,7 +41,8 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="0.12*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="searchTextBox" Margin="0,5,0,5"/>
+                <TextBox x:Name="searchTextBox" Margin="0,5,0,5"
+                         Text="{Binding TextSearch, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Grid.Column="1" Margin="0,5,0,5"
                         Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
                         Command="{Binding SearchGamesCommand}" CommandParameter="{Binding ElementName=searchTextBox, Path=Text}">
@@ -49,7 +51,7 @@
             </Grid>
 
             <Grid Grid.Row="1">
-                <Button Margin="0,5,0,5" Command="{Binding AddGameOpenWindowCommand}">
+                <Button Margin="0,5,0,5" Command="{Binding AddGameOpenWindowCommand}" CommandParameter="{Binding ElementName=mainWindow}">
                     <TextBlock Text="Add game by App Id"/>
                 </Button>
             </Grid>
@@ -63,7 +65,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid>
-                                        <Image Width="40" Height="40" Source="{StaticResource IconPlaceholder}"/>
+                                        <Image Width="40" Height="40" Source="https://steamdb.info/static/img/appicon.svg"/>
                                         <Image Width="40" Height="40" Source="{Binding ClientIconUrl}"/>
                                     </Grid>
                                 </DataTemplate>
@@ -105,12 +107,13 @@
                         <Border BorderBrush="{StaticResource DarkBrush3}" BorderThickness="5">
                             <Image Margin="5" Stretch="Uniform" Source="{Binding LogoUrl}"/>
                         </Border>
-                        <TextBlock Grid.Row="1" DockPanel.Dock="Top" Margin="10" Style="{StaticResource NameTextBlock}"
-                               Text="{Binding Name}"/>
+                        <Viewbox Grid.Row="1" StretchDirection="Both" Margin="10">
+                            <TextBlock Style="{StaticResource NameTextBlock}"
+                                       Text="{Binding Name}" Background="{StaticResource DarkBrush3}"/>
+                        </Viewbox>
                     </Grid>
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -120,10 +123,16 @@
                                    Style="{StaticResource GameInfoTextBlock}"/>
                         <TextBlock Grid.Row="1" Text="{Binding ReleaseDate, StringFormat='Release date: \{0\}'}" Margin="10"
                                    Style="{StaticResource GameInfoTextBlock}"/>
-                        <TextBlock Grid.Row="2" Text="{Binding ReviewCount, StringFormat='Reviews: \{0\}'}" Margin="10"
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding ReviewCount, StringFormat='Reviews: \{0\}'}" Margin="10"
                                    Style="{StaticResource GameInfoTextBlock}"/>
-                        <TextBlock Grid.Row="3" Text="{Binding ReviewPercentage, StringFormat='\{0\}% positive'}" Margin="10"
+                            <TextBlock Grid.Column="1" Text="{Binding ReviewPercentage, StringFormat='\{0\}% positive'}" Margin="10"
                                    Style="{StaticResource GameInfoTextBlock}"/>
+                        </Grid>
                         <TextBlock Grid.Row="4" Text="{Binding SteamUrl, StringFormat='Steam page: \{0\}'}" Margin="10"
                                    Style="{StaticResource GameInfoTextBlock}"/>
                     </Grid>

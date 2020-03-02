@@ -8,6 +8,6 @@ namespace EFCoursework.WPF.Factories
 {
     public interface IWindowFactory
     {
-        void CreateAddGameWindow(MainViewModel viewModel);
+        void CreateAddGameWindow(object ownerWindow, MainViewModel viewModel);
     }
 }

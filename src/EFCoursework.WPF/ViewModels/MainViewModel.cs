@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -54,6 +55,34 @@ namespace EFCoursework.WPF.ViewModels
             }
         }
 
+        private ListCollectionView _view;
+        public ICollectionView View
+        {
+            get => _view;
+        }
+
+        private string _textSearch;
+        public string TextSearch
+        {
+            get => _textSearch;
+            set
+            {
+                Set(ref _textSearch, value);
+
+                if (string.IsNullOrEmpty(value))
+                    View.Filter = null;
+                else
+                    View.Filter = new Predicate<object>(g => ((GameDTO)g).Name.Contains(value));
+            }
+        }
+
+        public async Task LoadGames()
+        {
+            var games = await _gameService.GetAllGamesAsync();
+            Games = new ObservableCollection<GameDTO>(games);
+            _view = new ListCollectionView(Games);
+        }
+
         #region commands
         private ICommand _loadGamesCommand;
         public ICommand LoadGamesCommand
@@ -65,8 +94,7 @@ namespace EFCoursework.WPF.ViewModels
                     _loadGamesCommand = new RelayCommand(async () =>
                     {
                         // load games from database
-                        var games = await _gameService.GetAllGamesAsync();
-                        Games = new ObservableCollection<GameDTO>(games);
+                        await LoadGames();
                     });
                 }
                 return _loadGamesCommand;
@@ -80,9 +108,9 @@ namespace EFCoursework.WPF.ViewModels
             {
                 if (_addGameOpenWindowCommand == null)
                 {
-                    _addGameOpenWindowCommand = new RelayCommand(() =>
+                    _addGameOpenWindowCommand = new RelayCommand<object>(owner =>
                     {
-                        _windowFactory.CreateAddGameWindow(this);
+                        _windowFactory.CreateAddGameWindow(owner, this);
                     });
                 }
                 return _addGameOpenWindowCommand;
@@ -120,6 +148,7 @@ namespace EFCoursework.WPF.ViewModels
                         //parse game and add to database
                         var parsedGames = await _parseService.ParseAsync(id);
                         await _gameService.InsertGamesAsync(parsedGames);
+                        await LoadGames();
                     });
                 }
 
