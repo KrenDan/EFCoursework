@@ -4,7 +4,7 @@
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"/>
         <Setter Property="FontSize" Value="{StaticResource Regular}"/>
-        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="Foreground" Value="{StaticResource DarkBrush3}"/>
     </Style>
 
@@ -21,5 +21,20 @@
         <Setter Property="FontWeight" Value="Light"/>
         <Setter Property="Foreground" Value="{StaticResource LightBrush1}"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="CountTextBlock" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource LightBrush1}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"/>
+        <Setter Property="FontSize" Value="{StaticResource Large}"/>
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"/>
+        <Setter Property="FontSize" Value="{StaticResource Regular}"/>
+        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="Background" Value="{StaticResource LightBrush1}"/>
+        <Setter Property="Foreground" Value="{StaticResource DarkBrush3}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
 </ResourceDictionary>

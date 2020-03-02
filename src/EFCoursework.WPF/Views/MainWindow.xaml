@@ -8,7 +8,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:conv="clr-namespace:EFCoursework.WPF.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1600"
+        Title="Game Parser" Height="900" Width="1600"
         Background="{StaticResource DarkBrush1}">
     <Window.Resources>
         <conv:BoolVisibilityConverter x:Key="boolVisibility"/>
@@ -23,22 +23,40 @@
     <Grid Background="{StaticResource InvertedMainBackgroundBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <Grid Margin="10" Background="{StaticResource MainBackgroundBrush}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition/>
-                <RowDefinition Height="0.06*"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
-            <ListView ItemsSource="{Binding Games}" 
-                      SelectedItem="{Binding SelectedGame}" 
-                      Name="gamesDataGrid" Opacity="0.6" 
-                      ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      ScrollViewer.CanContentScroll="False"
-                      Background="{StaticResource LightBrush1}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.12*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="searchTextBox" Margin="0,5,0,5"/>
+                <Button Grid.Column="1" Margin="0,5,0,5"
+                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                        Command="{Binding SearchGamesCommand}" CommandParameter="{Binding ElementName=searchTextBox, Path=Text}">
+                    <Image Source="{StaticResource SearchIcon}"/>
+                </Button>
+            </Grid>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button Margin="0,5,0,5" Width="510" Command="{Binding AddGameOpenWindowCommand}">
+                    <TextBlock Text="Add game by App Id"/>
+                </Button>
+            </StackPanel>
+
+            <ListView Grid.Row="2" Style="{StaticResource GameListView}"
+                      ItemsSource="{Binding Games}" 
+                      SelectedItem="{Binding SelectedGame}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Icon">
@@ -52,32 +70,33 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Price}" Header="Price"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding ReviewPercentage}" Header="Review Percentage"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Price, StringFormat='\{0\}₴'}" Header="Price"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding ReviewPercentage, StringFormat='\{0\}% reviews'}" Header="Review Percentage"/>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <TextBlock Grid.Row="1"
-                       Foreground="{StaticResource LightBrush1}" 
-                       FontFamily="{StaticResource DefaultFont}" 
-                       FontSize="{StaticResource Large}" 
-                       Text="{Binding Games.Count, StringFormat='Games count: \{0\}'}">
-            </TextBlock>
+
+            <TextBlock Grid.Row="3" Margin="5,0,5,0" Style="{StaticResource CountTextBlock}" 
+                       Text="{Binding Games.Count, StringFormat='Games count: \{0\}'}"/>
         </Grid>
 
-        <Grid Grid.Column="1" Margin="10"
-                Background="{StaticResource MainBackgroundBrush}"
-                Visibility="{Binding SelectedGame, Converter={StaticResource boolVisibility}}">
+        <GridSplitter Grid.Column="1" ResizeDirection="Auto"
+                      ResizeBehavior="PreviousAndNext"
+                      Width="5" Background="{StaticResource LightBrush2}"/>
+        
+        <Grid Grid.Column="2" Margin="10"
+              Background="{StaticResource MainBackgroundBrush}"
+              Visibility="{Binding SelectedGame, Converter={StaticResource boolVisibility}}">
             <Grid DataContext="{Binding GameInfoViewModel}">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <DockPanel LastChildFill="False">
-                    <Border DockPanel.Dock="Left" BorderBrush="{StaticResource DarkBrush3}" BorderThickness="5">
-                        <Image Margin="5" Stretch="Fill" Source="{Binding LogoUrl}"/>
+                <Grid>
+                    <Border BorderBrush="{StaticResource DarkBrush3}" BorderThickness="5">
+                        <Image Margin="5" Stretch="Uniform" Source="{Binding LogoUrl}"/>
                     </Border>
-                </DockPanel>
+                </Grid>
                 <DockPanel Grid.Row="1">
                     <TextBlock DockPanel.Dock="Top" Margin="10" Style="{StaticResource NameTextBlock}"
                                Text="{Binding Name}"/>

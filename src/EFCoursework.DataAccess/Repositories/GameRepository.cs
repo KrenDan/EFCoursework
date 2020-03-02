@@ -48,8 +48,6 @@ namespace EFCoursework.DataAccess.Repositories
 
         public override async Task InsertAsync(params Game[] games)
         {
-            await _dbSet.AddRangeAsync(games).ConfigureAwait(false);
-
             foreach (var game in games)
             {
                 foreach (var item in game.Genres)
@@ -58,9 +56,8 @@ namespace EFCoursework.DataAccess.Repositories
 
                     if (src != null)
                     {
-                        item.Genre = src;
+                        item.Genre = null;
                         item.GenreId = src.Id;
-                        _context.Entry(src).State = EntityState.Detached;
                     }
                 }
                 foreach (var item in game.Tags)
@@ -69,9 +66,8 @@ namespace EFCoursework.DataAccess.Repositories
 
                     if (src != null)
                     {
-                        item.Tag = src;
+                        item.Tag = null;
                         item.TagId = src.Id;
-                        _context.Entry(src).State = EntityState.Detached;
                     }
                 }
                 foreach (var item in game.Developers)
@@ -80,9 +76,18 @@ namespace EFCoursework.DataAccess.Repositories
 
                     if (src != null)
                     {
-                        item.Developer = src;
+                        item.Developer = null;
                         item.DeveloperId = src.Id;
-                        _context.Entry(src).State = EntityState.Detached;
+                    }
+                }
+                foreach (var item in game.Publishers)
+                {
+                    var src = await _context.Set<Publisher>().FirstOrDefaultAsync(d => d.Name == item.Publisher.Name);
+
+                    if (src != null)
+                    {
+                        item.Publisher = null;
+                        item.PublisherId = src.Id;
                     }
                 }
                 foreach (var item in game.SupportedLanguages)
@@ -91,9 +96,8 @@ namespace EFCoursework.DataAccess.Repositories
 
                     if (src != null)
                     {
-                        item.Language = src;
+                        item.Language = null;
                         item.LanguageId = src.Id;
-                        _context.Entry(src).State = EntityState.Detached;
                     }
                 }
                 foreach (var item in game.SupportedSystems)
@@ -102,12 +106,12 @@ namespace EFCoursework.DataAccess.Repositories
 
                     if (src != null)
                     {
-                        item.OS = src;
+                        item.OS = null;
                         item.OSId = src.Id;
-                        _context.Entry(src).State = EntityState.Detached;
                     }
                 }
             }
+            await _dbSet.AddRangeAsync(games).ConfigureAwait(false);
         }
     }
 }

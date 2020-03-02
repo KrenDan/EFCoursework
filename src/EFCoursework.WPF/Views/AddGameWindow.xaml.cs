@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace EFCoursework.WPF.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для AddGameWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IClosable
+    public partial class AddGameWindow : Window, IClosable
     {
-        public MainWindow()
+        public AddGameWindow()
         {
             InitializeComponent();
         }

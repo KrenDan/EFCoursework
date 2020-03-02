@@ -3,6 +3,7 @@ using EFCoursework.BusinessLogic.DTO;
 using EFCoursework.BusinessLogic.Infrastructure;
 using EFCoursework.BusinessLogic.Infrastructure.Mapper;
 using EFCoursework.BusinessLogic.Services;
+using EFCoursework.WPF.Factories;
 using EFCoursework.WPF.ViewModels;
 using EFCoursework.WPF.ViewModels.Factories;
 using EFCoursework.WPF.Views;
@@ -21,6 +22,7 @@ namespace EFCoursework.WPF.Infrastructure
         {
             BusinessConfiguration.ConfigureServices(services, configuration);
 
+            services.AddSingleton<IWindowFactory, WindowFactory>();
             services.AddSingleton<IViewModelAbstractFactory, ViewModelAbstractFactory>();
             services.AddSingleton<IViewModelFactory<MainViewModel>, MainViewModelFactory>();
             services.AddSingleton<IViewModelFactory<GameInfoViewModel>, GameInfoViewModelFactory>();
@@ -28,7 +30,10 @@ namespace EFCoursework.WPF.Infrastructure
             services.AddScoped<GameInfoViewModel>();
             services.AddScoped(s => s.GetRequiredService<IViewModelFactory<MainViewModel>>().CreateViewModel());
 
-            services.AddScoped(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
+            services.AddScoped(s => new MainWindow()
+            {
+                DataContext = s.GetRequiredService<MainViewModel>()
+            });
         }
     }
 }

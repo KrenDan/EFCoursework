@@ -3,4 +3,5 @@
                     xmlns:local="clr-namespace:EFCoursework.WPF.Styles"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <BitmapImage x:Key="IconPlaceholder" UriSource="https://steamdb.info/static/img/appicon.svg"/>
+    <BitmapImage x:Key="SearchIcon" UriSource="/EFCoursework.WPF;component/Resources/SearchIcon.png"/>
 </ResourceDictionary>

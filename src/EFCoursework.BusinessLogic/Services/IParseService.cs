@@ -7,6 +7,6 @@ namespace EFCoursework.BusinessLogic.Services
 {
     public interface IParseService<T>
     {
-        Task<T> ParseAsync();
+        Task<T> ParseAsync(params int[] appIds);
     }
 }

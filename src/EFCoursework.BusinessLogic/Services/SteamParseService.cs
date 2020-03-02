@@ -32,50 +32,49 @@ namespace EFCoursework.BusinessLogic.Services
             _web = new HtmlWeb();
         }
 
-        public async Task<IEnumerable<GameDTO>> ParseAsync()
+        public async Task<IEnumerable<GameDTO>> ParseAsync(params int[] appIds)
         {
             var result = new List<GameDTO>();
 
-            string infoUrl = "https://steamdb.info/app/70/info/";
-            string pricesUrl = "https://steamdb.info/app/70/";
-            string screenshotsUrl = "https://steamdb.info/app/70/screenshots/";
-            
-            var infoDoc = await _web.LoadFromWebAsync(infoUrl);
-            var pricesDoc = await _web.LoadFromWebAsync(pricesUrl);
-            var screenshotsDoc = await _web.LoadFromWebAsync(screenshotsUrl);
-
-            string steamUrl = GetSteamUrl(infoDoc);
-
-            var steamDoc = await _web.LoadFromWebAsync(steamUrl);
-
-            var game = new GameDTO
+            foreach (int appId in appIds)
             {
-                Id = GetAppId(infoDoc),
-                Name = GetName(infoDoc),
-                Description = GetDescription(infoDoc),
-                Price = GetPrice(pricesDoc),
-                Discount = GetDiscount(infoDoc),
-                ReviewCount = GetReviewCount(infoDoc),
-                ReviewScore = GetReviewScore(infoDoc),
-                ReviewPercentage = GetReviewPercentage(infoDoc),
-                Developers = GetDevelopers(infoDoc),
-                Publishers = GetPublishers(infoDoc),
-                SupportedSystems = GetSystems(infoDoc),
-                Genres = GetGenres(infoDoc),
-                Tags = GetTags(infoDoc),
-                Screenshots = GetScreenshots(infoDoc, screenshotsDoc),
-                Videos = GetVideos(infoDoc),
-                ReleaseDate = GetReleaseDate(infoDoc),
-                ClientIconUrl = GetClientIconUrl(infoDoc),
-                LogoUrl = GetLogoUrl(infoDoc),
-                SteamUrl = GetSteamUrl(infoDoc),
-                IsReleased = GetIsReleased(infoDoc),
-                FullAudioSupportedLanguages = GetSupportedLanguages(infoDoc, LanguageType.FullAudio),
-                InterfaceSupportedLanguages = GetSupportedLanguages(infoDoc, LanguageType.Supported),
-                SubtitlesSupportedLanguages = GetSupportedLanguages(infoDoc, LanguageType.Subtitles)
-            };
+                string infoUrl = $"https://steamdb.info/app/{appId}/info/";
+                string pricesUrl = $"https://steamdb.info/app/{appId}/";
+                string screenshotsUrl = $"https://steamdb.info/app/{appId}/screenshots/";
 
-            result.Add(game);
+                var infoDoc = await _web.LoadFromWebAsync(infoUrl);
+                var pricesDoc = await _web.LoadFromWebAsync(pricesUrl);
+                var screenshotsDoc = await _web.LoadFromWebAsync(screenshotsUrl);
+
+                var game = new GameDTO
+                {
+                    Id = GetAppId(infoDoc),
+                    Name = GetName(infoDoc),
+                    Description = GetDescription(infoDoc),
+                    Price = GetPrice(pricesDoc),
+                    Discount = GetDiscount(infoDoc),
+                    ReviewCount = GetReviewCount(infoDoc),
+                    ReviewScore = GetReviewScore(infoDoc),
+                    ReviewPercentage = GetReviewPercentage(infoDoc),
+                    Developers = GetDevelopers(infoDoc),
+                    Publishers = GetPublishers(infoDoc),
+                    SupportedSystems = GetSystems(infoDoc),
+                    Genres = GetGenres(infoDoc),
+                    Tags = GetTags(infoDoc),
+                    Screenshots = GetScreenshots(infoDoc, screenshotsDoc),
+                    Videos = GetVideos(infoDoc),
+                    ReleaseDate = GetReleaseDate(infoDoc),
+                    ClientIconUrl = GetClientIconUrl(infoDoc),
+                    LogoUrl = GetLogoUrl(infoDoc),
+                    SteamUrl = GetSteamUrl(infoDoc),
+                    IsReleased = GetIsReleased(infoDoc),
+                    FullAudioSupportedLanguages = GetSupportedLanguages(infoDoc, LanguageType.FullAudio),
+                    InterfaceSupportedLanguages = GetSupportedLanguages(infoDoc, LanguageType.Supported),
+                    SubtitlesSupportedLanguages = GetSupportedLanguages(infoDoc, LanguageType.Subtitles)
+                };
+
+                result.Add(game);
+            }
 
             return result;
         }
@@ -322,6 +321,8 @@ namespace EFCoursework.BusinessLogic.Services
 
             string text = string.Concat(node.InnerText.TakeWhile(ch => ch != '('));
             DateTime.TryParseExact(text, "d MMMM yyyy '–' HH':'mm':'ss 'UTC' ", CultureInfo.CreateSpecificCulture("en-US"), DateTimeStyles.None, out DateTime date);
+            if (date == DateTime.MinValue)
+                DateTime.TryParseExact(text, "d MMMM yyyy ", CultureInfo.CreateSpecificCulture("en-US"), DateTimeStyles.None, out date);
             return date;
         }
         private string GetClientIconUrl(HtmlDocument doc)
@@ -356,7 +357,12 @@ namespace EFCoursework.BusinessLogic.Services
             var node = doc.DocumentNode.SelectSingleNode(@"//td[text()='releasestate']/../td[2]");
 
             if (node == null)
+            {
+                var date = GetReleaseDate(doc);
+                if (date >= DateTime.Now)
+                    return true;
                 return false;
+            }
 
             return node.InnerText == "released";
         }
